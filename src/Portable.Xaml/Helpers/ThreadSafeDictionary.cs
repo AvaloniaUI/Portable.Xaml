@@ -40,7 +40,7 @@ namespace Portable.Xaml.Helpers
 				throw new ArgumentNullException();
 			_lock.EnterReadLock();
 		    var result = _dic.ContainsKey(key);
-			_lock.ExitWriteLock();
+			_lock.ExitReadLock();
 		    return result;
 	    }
 
