@@ -29,6 +29,7 @@ using Portable.Xaml.Markup;
 using Portable.Xaml.Helpers;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Concurrent;
 
 namespace Portable.Xaml.Schema
 {
@@ -48,7 +49,7 @@ namespace Portable.Xaml.Schema
 			Type = type;
 		}
 		
-		ThreadSafeDictionary<object, object> cache;
+		ConcurrentDictionary<object, object> cache;
 
 		static object s_CreateImmutableFromMutableKey = new object();
 		static object s_MutableTypeKey = new object();
@@ -57,7 +58,7 @@ namespace Portable.Xaml.Schema
 			where T: class
 		{
 			if (cache == null)
-				cache = new ThreadSafeDictionary<object, object>();
+				cache = new ConcurrentDictionary<object, object>();
 			object obj;
 			if (!cache.TryGetValue(key, out obj))
 			{
