@@ -26,7 +26,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using Portable.Xaml.Markup;
-using Portable.Xaml.Helpers;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
