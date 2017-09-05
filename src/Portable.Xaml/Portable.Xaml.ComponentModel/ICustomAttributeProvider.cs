@@ -59,7 +59,7 @@ namespace Portable.Xaml.ComponentModel
 			return info.IsDefined(attributeType, inherit);
 		}
 	}
-
+#if !NETSTANDARD2_0
 	public interface ICustomAttributeProvider
 	{
 		object[] GetCustomAttributes(bool inherit);
@@ -68,4 +68,5 @@ namespace Portable.Xaml.ComponentModel
 
 		bool IsDefined(Type attributeType, bool inherit);
 	}
+#endif
 }
