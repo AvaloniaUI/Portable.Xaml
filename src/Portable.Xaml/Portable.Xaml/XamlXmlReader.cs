@@ -539,14 +539,9 @@ namespace Portable.Xaml
 							}
 							throw new NotSupportedException(String.Format("Attribute '{0}' is not supported", r.Name));
 						default:
-							if (string.IsNullOrEmpty(r.NamespaceURI))
-							{
-								atts.Add(new StringPair(r.Name, r.Value));
-								continue;
-							}
-							// System.Xaml does not ignore attributes with namespaces
-							members.Add(new Pair(new XamlMember(r.LocalName, r.NamespaceURI), r.Value));
-							break;
+							atts.Add(new StringPair(r.Name, r.Value));
+							continue;
+
 					}
 				} while (r.MoveToNextAttribute());
 				r.MoveToElement();
