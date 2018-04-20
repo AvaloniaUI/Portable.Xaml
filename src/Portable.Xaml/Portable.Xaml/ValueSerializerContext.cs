@@ -1,4 +1,4 @@
-﻿//
+//
 // Copyright (C) 2010 Novell Inc. http://novell.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -43,13 +43,13 @@ namespace Portable.Xaml
 		NamespaceResolver namespace_resolver;
 		PrefixLookup prefix_lookup;
 		XamlSchemaContext sctx;
-		IAmbientProvider ambient_provider;
+		Func<IAmbientProvider> _ambientProviderProvider;
 		IProvideValueTarget provideValue;
 		IRootObjectProvider rootProvider;
 		IDestinationTypeProvider destinationProvider;
 		IXamlObjectWriterFactory objectWriterFactory;
 
-		public ValueSerializerContext(PrefixLookup prefixLookup, XamlSchemaContext schemaContext, IAmbientProvider ambientProvider, IProvideValueTarget provideValue, IRootObjectProvider rootProvider, IDestinationTypeProvider destinationProvider, IXamlObjectWriterFactory objectWriterFactory)
+		public ValueSerializerContext(PrefixLookup prefixLookup, XamlSchemaContext schemaContext, Func<IAmbientProvider> ambientProviderProvider, IProvideValueTarget provideValue, IRootObjectProvider rootProvider, IDestinationTypeProvider destinationProvider, IXamlObjectWriterFactory objectWriterFactory)
 		{
 			if (prefixLookup == null)
 				throw new ArgumentNullException("prefixLookup");
@@ -57,7 +57,7 @@ namespace Portable.Xaml
 				throw new ArgumentNullException("schemaContext");
 			prefix_lookup = prefixLookup;
 			sctx = schemaContext;
-			ambient_provider = ambientProvider;
+			_ambientProviderProvider = ambientProviderProvider;
 			this.provideValue = provideValue;
 			this.rootProvider = rootProvider;
 			this.destinationProvider = destinationProvider;
@@ -81,7 +81,7 @@ namespace Portable.Xaml
 			if (serviceType == typeof(IXamlTypeResolver))
 				return TypeResolver;
 			if (serviceType == typeof(IAmbientProvider))
-				return ambient_provider;
+				return _ambientProviderProvider?.Invoke();
 			if (serviceType == typeof(IXamlSchemaContextProvider))
 				return this;
 			if (serviceType == typeof(IProvideValueTarget))
