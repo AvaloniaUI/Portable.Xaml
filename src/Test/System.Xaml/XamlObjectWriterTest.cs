@@ -2372,10 +2372,10 @@ $@"<TestClass7
 			Assert.AreEqual(2, result.Items.Count);
 		}
 
-		[Test]
-		public void CollectionShouldBeAssigned()
-		{
-			var xml = $@"
+        [Test]
+        public void CollectionShouldBeAssigned()
+        {
+            var xml = $@"
 <CollectionAssignnmentTest xmlns='clr-namespace:MonoTests.Portable.Xaml;assembly=Portable.Xaml_test_net_4_0'
 					  	   xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'
 						   xmlns:scg='clr-namespace:System.Collections.Generic;assembly=mscorlib'>
@@ -2384,10 +2384,22 @@ $@"<TestClass7
 		<TestClass4/>	
 	</scg:List>
 </CollectionAssignnmentTest>".UpdateXml();
-			var result = (CollectionAssignnmentTest)XamlServices.Parse(xml);
+            var result = (CollectionAssignnmentTest)XamlServices.Parse(xml);
 
-			Assert.True(result.Assigned);
-			Assert.AreEqual(2, result.Items.Count);
+            Assert.True(result.Assigned);
+            Assert.AreEqual(2, result.Items.Count);
+        }
+
+		[Test]
+		public void TypeConverterIsUsedEvenIfMatchingType()
+		{
+			var xml =
+$@"<TypeConverterUsed 
+		xmlns='clr-namespace:MonoTests.Portable.Xaml;assembly=Portable.Xaml_test_net_4_0' 
+		Value='Bar' />".UpdateXml();
+			var result = (TypeConverterUsed)XamlServices.Parse(xml);
+
+			Assert.AreEqual("FooBar", result.Value);
 		}
 	}
 }
