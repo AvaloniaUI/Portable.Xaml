@@ -2344,5 +2344,50 @@ $@"<TestClass7
 			Assert.False(ReferenceEquals(result, result.Bar));
 
 		}
+		
+		[Test]
+		public void CollectionShouldNotBeAssigned()
+		{
+			var xml = $@"
+<CollectionAssignnmentTest xmlns='clr-namespace:MonoTests.Portable.Xaml;assembly=Portable.Xaml_test_net_4_0'>
+    <TestClass4/>	
+</CollectionAssignnmentTest>".UpdateXml();
+			var result = (CollectionAssignnmentTest)XamlServices.Parse(xml);
+
+			Assert.False(result.Assigned);
+			Assert.AreEqual(1, result.Items.Count);
+		}
+
+		[Test]
+		public void CollectionShouldNotBeAssigned2()
+		{
+			var xml = $@"
+<CollectionAssignnmentTest xmlns='clr-namespace:MonoTests.Portable.Xaml;assembly=Portable.Xaml_test_net_4_0'>
+    <TestClass4/>	
+    <TestClass4/>	
+</CollectionAssignnmentTest>".UpdateXml();
+			var result = (CollectionAssignnmentTest)XamlServices.Parse(xml);
+
+			Assert.False(result.Assigned);
+			Assert.AreEqual(2, result.Items.Count);
+		}
+
+		[Test]
+		public void CollectionShouldBeAssigned()
+		{
+			var xml = $@"
+<CollectionAssignnmentTest xmlns='clr-namespace:MonoTests.Portable.Xaml;assembly=Portable.Xaml_test_net_4_0'
+					  	   xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'
+						   xmlns:scg='clr-namespace:System.Collections.Generic;assembly=mscorlib'>
+	<scg:List x:TypeArguments='TestClass4'>
+		<TestClass4/>	
+		<TestClass4/>	
+	</scg:List>
+</CollectionAssignnmentTest>".UpdateXml();
+			var result = (CollectionAssignnmentTest)XamlServices.Parse(xml);
+
+			Assert.True(result.Assigned);
+			Assert.AreEqual(2, result.Items.Count);
+		}
 	}
 }
