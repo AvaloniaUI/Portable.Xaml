@@ -422,6 +422,8 @@ namespace MonoTests.Portable.Xaml
 			}
 		}
 
+		public string Baz { get; set; }
+
 		public void BeginInit()
 		{
 			State++;
